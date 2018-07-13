@@ -35,8 +35,8 @@ class Battleship
     end
 
     def initialize ()
-        @intact_segments = []
         @initial_segments = []
+        @hit_segments = []
         @placed = false
     end
 
@@ -44,9 +44,10 @@ class Battleship
         segments = []
         Length.times do
             segments << [x,y]
-            if orientation == :horizontal then 
+            case orientation
+            when :horizontal 
                 x = x + 1
-            elsif orientation == :vertical then
+            when :vertical 
                 y = y + 1
             end
         end
@@ -55,7 +56,6 @@ class Battleship
 
     def place (x, y, orientation)
         @initial_segments = plan_segments(x, y, orientation)
-        @intact_segments = @initial_segments.dup
         @placed = true
     end
 
@@ -64,10 +64,10 @@ class Battleship
     end
 
     def sunk?
-        @intact_segments.empty?
+        (@initial_segments - @hit_segments).empty?
     end
 
     def hit(x,y)
-        @intact_segments.delete [x,y]
+        @hit_segments << [x,y]
     end
 end
