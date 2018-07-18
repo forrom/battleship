@@ -5,7 +5,7 @@ x vertical ship
 x ships cannot overlap
 x ships cannot cross over board's edge
 - multiple ships sinking
-- different ship lengths
+x different ship lengths
 - all ships sunk on board
 - board printing
 
@@ -102,3 +102,15 @@ IV. BOARD EDGES
 3. Ship cannot have negative coordinates
 	1. Init 10x10 board
 	2. Place carrier size 5 at -1,3 vertically -> verify ship is not placed
+
+V. SHIP SIZES
+----------------------------
+1. Ship can be placed next to destroyer
+	1. Init 10x10 board
+	2. Place destroyer at 0,0 horizontally -> verify ship is placed
+	3. Place submarine at 2,0 horizontally -> verify ship is placed
+
+2. Ship cannot be placed on destroyer
+	1. Init 10x10 board
+	2. Place destroyer at 0,0 horizontally -> verify ship is placed
+	3. Place submarine at 1,0 horizontally -> verify ship is not placed

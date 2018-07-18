@@ -118,4 +118,29 @@ describe 'place and sink ship' do
 
         expect(carrier.placed?).to be false
     end
+
+    it "ship can be placed next to destroyer" do
+        board = Board.new(10,10)
+
+        destroyer = Destroyer.new()
+        board.place(destroyer, 0, 0, :horizontal)
+        expect(destroyer.placed?).to be true
+
+        sub = Submarine.new()
+        board.place(sub, 2, 0, :horizontal)
+        expect(sub.placed?).to be true
+    end
+
+    it "ship cannot be placed on destroyer" do
+        board = Board.new(10,10)
+
+        destroyer = Destroyer.new()
+        board.place(destroyer, 0, 0, :horizontal)
+        expect(destroyer.placed?).to be true
+
+        sub = Submarine.new()
+        board.place(sub, 1, 0, :horizontal)
+        expect(sub.placed?).to be false
+
+    end
 end
