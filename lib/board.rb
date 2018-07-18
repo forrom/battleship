@@ -1,17 +1,28 @@
 class Board
     def initialize(width, height)
         @ships = []
+        @width = width;
+        @height = height
     end
 
     def place(ship, x, y, orientation)
         planned_location = ship.plan_segments(x, y, orientation)
+        return if planned_location.any? do |location|
+            location [0] < 0 ||
+            location[1] < 0 ||
+            @width <= location[0] ||
+            @height <= location[1]
+        end
+
         taken_locations = []
         @ships.each do |placed_ship|
-            taken_locations += placed_ship.initial_segments
+            taken_locations += placed_ship.segments
         end
+
         unless (planned_location & taken_locations).empty? then
             return
         end
+        
         @ships << ship
         ship.place x, y, orientation
     end
@@ -23,20 +34,20 @@ class Board
     end
 
     def ship_at(x,y)
-        @ships.find {|ship| ship.initial_segments.include? [x,y]}
+        @ships.find {|ship| ship.segments.include? [x,y]}
     end
 end
 
-class Battleship
+class Carrier
     Length = 5 
     
-    def initial_segments
-        @initial_segments
+    def segments
+        @segments
     end
 
     def initialize ()
-        @initial_segments = []
-        @hit_segments = []
+        @segments = []
+        @hits = []
         @placed = false
     end
 
@@ -55,7 +66,7 @@ class Battleship
     end
 
     def place (x, y, orientation)
-        @initial_segments = plan_segments(x, y, orientation)
+        @segments = plan_segments(x, y, orientation)
         @placed = true
     end
 
@@ -64,10 +75,10 @@ class Battleship
     end
 
     def sunk?
-        (@initial_segments - @hit_segments).empty?
+        (@segments - @hits).empty?
     end
 
     def hit(x,y)
-        @hit_segments << [x,y]
+        @hits << [x,y]
     end
 end

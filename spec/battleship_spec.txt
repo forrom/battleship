@@ -3,7 +3,7 @@ BATTLESHIP!!!
 x place and sink ship
 x vertical ship
 x ships cannot overlap
-- ships cannot cross over board's edge
+x ships cannot cross over board's edge
 - multiple ships sinking
 - different ship lengths
 - all ships sunk on board
@@ -21,41 +21,41 @@ I.  PLACE AND SINK SHIP
 ----------------------------
 1. Ship can be sunk
 	1. Init 10x10 board
-	2. Place battleship size 5 at 2,3 horizontally
+	2. Place carrier size 5 at 2,3 horizontally
 	3. Shoot
 		3.a [2,3]
 		3.b [3,3]
 		3.c [4,3]
 		3.d [5,3]
 		3.e [6,3]
-	4. Verify that battleship is sunk
+	4. Verify that carrier is sunk
 
 2. Ship is not sunk until all segments are hit
 	1. Init 10x10 board
-	2. Place battleship size 5 at 2,3 horizontally
+	2. Place carrier size 5 at 2,3 horizontally
 	3. Shoot
 		3.a [2,3]
 		3.b [3,3]
 		3.c [4,3]
 		3.d [5,3]
-	4. Verify that battleship is not sunk
+	4. Verify that carrier is not sunk
 
 3. Ship not sunk if only one segment hit
 	1. Init 10x10 board
-	2. Place battleship size 5 at 2,3 horizontally
+	2. Place carrier size 5 at 2,3 horizontally
 	3. Shoot
 		3.a [6,3]
-	4. Verify that battleship is not sunk
+	4. Verify that carrier is not sunk
 
 4. Ships can be placed
 	1. Init 10x10 board
-	2. Place battleship size 5 at 2,3 horizontally
+	2. Place carrier size 5 at 2,3 horizontally
 	3. Verify that ship is placed
 
 5. Second ship can be sunk
 	1. Init 10x10 board
-	2. Place battleship size 5 at 0,0 horizontally -> verify ship is placed
-	3. Place battleship size 5 at 0,3 horizontally -> verify ship is placed
+	2. Place carrier size 5 at 0,0 horizontally -> verify ship is placed
+	3. Place carrier size 5 at 0,3 horizontally -> verify ship is placed
 	4. Shoot
 		4.a [0,3] -> verify ship2 not sunk
 		4.b [1,3] -> verify ship2 not sunk
@@ -67,7 +67,7 @@ II. VERTICAL SHIP
 ----------------------------
 1. Ship can be placed vertically then sunk	
 	1. Init 10x10 board
-	2. Place battleship size 5 at 2,3 vertically
+	2. Place carrier size 5 at 2,3 vertically
 	3. Shoot
 		3.a [2,3] -> verify not sunk
 		3.b [2,4] -> verify not sunk
@@ -79,13 +79,26 @@ III. OVERLAPPING SHIPS
 ----------------------------
 1. Ships cannot be placed if first ship already occupies at least planned square
 	1. Init 10x10 board
-	2. Place battleship size 5 at 0,3 horizontally -> verify ship is placed
-	3. Place battleship size 5 at 2,3 vertically -> verify ship is not placed
+	2. Place carrier size 5 at 0,3 horizontally -> verify ship is placed
+	3. Place carrier size 5 at 2,3 vertically -> verify ship is not placed
 
 
 2. Ships cannot be placed if second ship already occupies at least planned square
 	1. Init 10x10 board
-	2. Place battleship size 5 at 0,0 horizontally -> verify ship is placed
-	3. Place battleship size 5 at 0,3 horizontally -> verify ship is placed
-	4. Place battleship size 5 at 2,3 vertically -> verify ship is not placed
+	2. Place carrier size 5 at 0,0 horizontally -> verify ship is placed
+	3. Place carrier size 5 at 0,3 horizontally -> verify ship is placed
+	4. Place carrier size 5 at 2,3 vertically -> verify ship is not placed
 
+IV. BOARD EDGES
+----------------------------
+1. Ship cannot be placed if segment is outside board horizontally
+	1. Init 10x10 board
+	2. Place carrier size 5 at 6,0 horizontally -> verify ship is not placed
+
+2. Ship cannot be placed if start is outside board vertically
+	1. Init 10x10 board
+	2. Place carrier size 5 at 0,6 vertically -> verify ship is not placed
+
+3. Ship cannot have negative coordinates
+	1. Init 10x10 board
+	2. Place carrier size 5 at -1,3 vertically -> verify ship is not placed
