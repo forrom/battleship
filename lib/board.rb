@@ -38,9 +38,13 @@ class Board
     end
 end
 
-class Carrier
-    Length = 5 
-    
+
+
+class Ship
+    def self.length
+        @length
+    end
+
     def segments
         @segments
     end
@@ -53,7 +57,7 @@ class Carrier
 
     def plan_segments(x, y, orientation)
         segments = []
-        Length.times do
+        self.class.length.times do
             segments << [x,y]
             case orientation
             when :horizontal 
