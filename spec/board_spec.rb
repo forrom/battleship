@@ -144,3 +144,90 @@ describe 'place and sink ship' do
 
     end
 end
+
+describe "board has ships remaining?" do
+    it "no ships remaining if all sunk" do
+        board = Board.new(10,10)
+        board.place(Submarine.new(), 0,0, :horizontal)
+        board.place(Destroyer.new(), 0,1, :horizontal)
+
+        board.shoot(0,0)
+        board.shoot(1,0)
+        board.shoot(2,0)
+        board.shoot(0,1)
+        board.shoot(1,1)
+
+        expect(board.ships_remain?).to be false
+    end
+
+    it "ships remaining if one out of two sunk" do
+        board = Board.new(10,10)
+        board.place(Submarine.new(), 0,0, :horizontal)
+        board.place(Destroyer.new(), 0,1, :horizontal)
+
+        board.shoot(0,0)
+        board.shoot(1,0)
+        board.shoot(2,0)
+        board.shoot(0,1)
+
+        expect(board.ships_remain?).to be true
+    end
+
+    it "ships remaining if none sunk" do
+        
+        board = Board.new(10,10)
+        board.place(Submarine.new(), 0,0, :horizontal)
+        board.place(Destroyer.new(), 0,1, :horizontal)
+
+        board.shoot(1,0)
+        board.shoot(2,0)
+        board.shoot(0,1)
+
+        expect(board.ships_remain?).to be true
+    end
+end
+
+describe "board drawing" do
+    it "drawing 4x3 empty board" do
+        board = Board.new(4,3)
+
+        expected_board = <<~EOS
+            -----------
+            | ~ ~ ~ ~ |
+            | ~ ~ ~ ~ |
+            | ~ ~ ~ ~ |
+            -----------
+        EOS
+
+        expect(board.draw).to eq expected_board
+    end
+
+    
+    it "drawing 2x1 empty board" do
+        board = Board.new(2,1)
+
+        expected_board = <<~EOS
+            -------
+            | ~ ~ |
+            -------
+        EOS
+
+        expect(board.draw).to eq expected_board
+    end
+    
+    it "drawing 4x3 board with sub and destroyer" do
+        board = Board.new(4,3)
+        board.place(Submarine.new(), 1,1, :horizontal)
+        board.place(Destroyer.new(), 0,1, :vertical)
+
+        expected_board = <<~EOS
+            -----------
+            | ~ ~ ~ ~ |
+            | S S S S |
+            | Sir ~ ~ ~ |
+            -----------
+        EOS
+
+        expect(board.draw).to eq expected_board
+    end
+end

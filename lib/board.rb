@@ -36,6 +36,24 @@ class Board
     def ship_at(x,y)
         @ships.find {|ship| ship.segments.include? [x,y]}
     end
+
+    def ships_remain?
+        not @ships.all? {|ship| ship.sunk?}
+    end
+
+    def draw
+        drawn = horizontal_border(@width)
+        @height.times do
+            drawn << "|"
+            drawn << " ~"*@width
+            drawn << " |\n"
+        end
+        drawn << horizontal_border(@width)
+    end
+
+    def horizontal_border(width)
+        "-"*(@width * 2 + 3)  + "\n"
+    end
 end
 
 
