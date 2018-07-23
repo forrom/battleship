@@ -230,4 +230,57 @@ describe "board drawing" do
         
         expect(board.draw).to eq expected_board
     end
+        
+    it "drawing 4x3 board with sub and hit destroyer" do
+        board = Board.new(4,3)
+        board.place(Submarine.new(), 1,1, :horizontal)
+        board.place(Destroyer.new(), 0,1, :vertical)
+        board.shoot(0,2)
+
+        expected_board = <<~EOS
+            -----------
+            | ~ ~ ~ ~ |
+            | D S S S |
+            | # ~ ~ ~ |
+            -----------
+        EOS
+        
+        expect(board.draw).to eq expected_board
+    end
+
+    it "drawing 4x3 board with hit sub and hit destroyer" do
+        board = Board.new(4,3)
+        board.place(Submarine.new(), 1,1, :horizontal)
+        board.place(Destroyer.new(), 0,1, :vertical)
+        
+        board.shoot(0,2)
+        board.shoot(2,1)
+
+        expected_board = <<~EOS
+            -----------
+            | ~ ~ ~ ~ |
+            | D S # S |
+            | # ~ ~ ~ |
+            -----------
+        EOS
+        
+        expect(board.draw).to eq expected_board
+    end
+
+    
+    it "drawing 4x3 board with miss in water" do
+        board = Board.new(4,3)
+        
+        board.shoot(0,2)
+
+        expected_board = <<~EOS
+            -----------
+            | ~ ~ ~ ~ |
+            | ~ ~ ~ ~ |
+            | - ~ ~ ~ |
+            -----------
+        EOS
+        
+        expect(board.draw).to eq expected_board
+    end
 end

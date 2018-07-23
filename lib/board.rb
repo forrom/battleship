@@ -3,6 +3,7 @@ class Board
         @ships = []
         @width = width;
         @height = height
+        @misses = []
     end
 
     def place(ship, x, y, orientation)
@@ -30,6 +31,8 @@ class Board
     def shoot(x,y)
         if ship = ship_at(x,y) then 
             ship.hit(x,y)
+        else 
+            @misses << [x,y]
         end
     end
 
@@ -47,7 +50,9 @@ class Board
             drawn << "|"
             @width.times do |x|
                 if ship = ship_at(x,y) then
-                    block_content = ship.symbol
+                    block_content = ship.symbol(x,y)
+                elsif @misses.include? [x,y]
+                    block_content = '-'
                 else
                     block_content = '~'
                 end
@@ -114,8 +119,12 @@ class Ship
         @hits << [x,y]
     end
 
-    def symbol
-        self.class.symbol
+    def symbol(x,y)
+        if @hits.include? [x,y]
+            '#'
+        else 
+            self.class.symbol 
+        end
     end
 
 end
