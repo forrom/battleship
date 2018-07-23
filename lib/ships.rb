@@ -13,8 +13,10 @@ end
 
 class Submarine < Ship
     @length = 3
+    @symbol = "S"
 end
 
 class Destroyer < Ship
     @length = 2
+    @symbol = "D"
 end

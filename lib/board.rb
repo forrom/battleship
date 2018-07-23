@@ -43,9 +43,16 @@ class Board
 
     def draw
         drawn = horizontal_border(@width)
-        @height.times do
+        @height.times do |y|
             drawn << "|"
-            drawn << " ~"*@width
+            @width.times do |x|
+                if ship = ship_at(x,y) then
+                    block_content = ship.symbol
+                else
+                    block_content = '~'
+                end
+                drawn << " #{block_content}"
+            end
             drawn << " |\n"
         end
         drawn << horizontal_border(@width)
@@ -59,6 +66,9 @@ end
 
 
 class Ship
+    class << self
+      attr_accessor :symbol
+    end
     def self.length
         @length
     end
@@ -103,4 +113,9 @@ class Ship
     def hit(x,y)
         @hits << [x,y]
     end
+
+    def symbol
+        self.class.symbol
+    end
+
 end
