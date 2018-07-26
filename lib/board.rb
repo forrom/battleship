@@ -1,3 +1,7 @@
+require "./lib/ship"
+require "./lib/ships"
+
+
 class Board
     def initialize(width, height)
         @ships = []

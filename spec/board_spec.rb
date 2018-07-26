@@ -1,5 +1,4 @@
 require "./lib/board"
-require "./lib/ships"
 
 describe 'place and sink ship' do 
     it "ship can be placed" do
